@@ -199,6 +199,7 @@ const WebsitesPreviewCanvas: React.FC = () => {
                 width={140}
                 height={48}
                 unoptimized
+                loading="eager"
                 className="h-auto w-auto max-h-12 max-w-[85%] object-contain"
               />
             </div>
@@ -288,6 +289,7 @@ const ApplicationsPreviewCanvas: React.FC = () => {
               width={120}
               height={42}
               unoptimized
+              loading="eager"
               className="h-auto w-auto max-h-11 object-contain"
             />
           </div>
@@ -486,6 +488,8 @@ const BrandingPreviewCanvas: React.FC = () => {
             width={180}
             height={60}
             unoptimized
+            priority
+            loading="eager"
             className="relative z-10 h-auto w-auto max-h-14 object-contain"
           />
         </div>
@@ -928,8 +932,8 @@ export const ServicesExhibition: React.FC = () => {
                   className="rounded-2xl border border-slate-800 bg-[#0B1220] p-6 sm:p-8 space-y-6"
                 >
                   {/* Discipline Stage Header */}
-                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-800 pb-5">
-                    <div className="space-y-1.5 max-w-xl">
+                  <div className="flex items-start justify-between gap-4 border-b border-slate-800 pb-5">
+                    <div className="space-y-1.5 min-w-0 flex-1 max-w-xl">
                       <span className="font-mono text-xs text-blue-400 tabular-nums">
                         {String(activeIndex + 1).padStart(2, "0")} / 06 ·{" "}
                         {DISCIPLINE_CATEGORY_MAP[activeService.slug]}

@@ -5,23 +5,41 @@ import Image from "next/image";
 
 export const NetworkHub: React.FC = () => {
   return (
-    <div className="relative group select-none flex items-center justify-center">
-      {/* Subtle Ambient Breathing Halo */}
-      <div className="absolute -inset-6 rounded-full bg-gradient-to-r from-brand-blue/15 via-blue-400/15 to-brand-green/15 dark:from-blue-500/25 dark:via-blue-400/15 dark:to-emerald-500/25 blur-2xl opacity-70 animate-hub-breathing pointer-events-none" />
+    <div className="relative group select-none flex items-center justify-center pointer-events-auto">
+      {/* Multi-layered Luminous Core Halo matching reference atmospheric bloom */}
+      <div
+        className="absolute -inset-8 rounded-full bg-gradient-to-tr from-[#0066FF]/25 via-[#0EA5E9]/20 to-[#00C853]/25 dark:from-[#3B82F6]/35 dark:via-[#38BDF8]/25 dark:to-[#10B981]/30 blur-2xl opacity-85 animate-hub-breathing pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -inset-3 rounded-full bg-gradient-to-br from-[#0066FF]/20 via-transparent to-[#00C853]/20 blur-md pointer-events-none"
+        aria-hidden="true"
+      />
 
-      {/* Central Stationary Hub Plate (Clean white interior preserves official dark-ink logo in both themes) */}
-      <div className="relative w-[132px] h-[132px] sm:w-[144px] sm:h-[144px] rounded-full bg-white border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-black/50 flex items-center justify-center p-4 transition-transform duration-300 hover:scale-[1.02]">
-        <div className="absolute inset-2 rounded-full border border-slate-100 pointer-events-none" />
-
-        <div className="relative w-full h-full flex items-center justify-center">
-          <Image
-            src="/brand/setsuzoku-logo.png"
-            alt="Setsuzoku LLP Logo"
-            width={140}
-            height={55}
-            priority
-            className="w-auto h-11 sm:h-12 object-contain"
+      {/* Luminous Spherical Outer Rim Ring */}
+      <div className="relative p-[3px] rounded-full bg-gradient-to-br from-[#0066FF] via-[#0EA5E9] to-[#00C853] shadow-[0_14px_40px_-8px_rgba(0,102,255,0.38)] dark:shadow-[0_14px_44px_-8px_rgba(59,130,246,0.45)] transition-transform duration-300 group-hover:scale-[1.03]">
+        {/* Crisp Pure White Inner Sphere Core — ensures official dark-ink logo stays razor sharp in Light & Dark modes */}
+        <div className="relative w-[112px] h-[112px] sm:w-[126px] sm:h-[126px] rounded-full bg-white flex items-center justify-center p-3.5 overflow-hidden">
+          {/* Subtle top specular glass reflection arc */}
+          <div
+            className="absolute inset-x-3 top-1.5 h-10 rounded-full bg-gradient-to-b from-blue-50/90 to-transparent pointer-events-none"
+            aria-hidden="true"
           />
+          <div
+            className="absolute inset-1.5 rounded-full border border-slate-100/90 pointer-events-none"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 w-full h-full flex items-center justify-center">
+            <Image
+              src="/brand/setsuzoku-logo.png"
+              alt="Setsuzoku LLP Logo"
+              width={140}
+              height={55}
+              priority
+              className="w-auto h-9 sm:h-11 object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>

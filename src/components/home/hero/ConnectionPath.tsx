@@ -15,80 +15,67 @@ export interface NodeBezierConfig {
   colorHex: string;
 }
 
-interface CurvedConnectionPathProps {
-  config: NodeBezierConfig;
-  isHovered: boolean;
+interface DynamicConnectionBeamProps {
+  id: string;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  colorHex: string;
+  visible: boolean;
 }
 
-export const CurvedConnectionPath: React.FC<CurvedConnectionPathProps> = ({
-  config,
-  isHovered,
+/**
+ * Clean energy beam connecting a focused/hovered 3D capability node directly
+ * to the central Setsuzoku sphere core.
+ */
+export const CurvedConnectionPath: React.FC<DynamicConnectionBeamProps> = ({
+  id,
+  startX,
+  startY,
+  endX,
+  endY,
+  colorHex,
+  visible,
 }) => {
-  const { id, startX, startY, ctrl1X, ctrl1Y, ctrl2X, ctrl2Y, endX, endY, colorHex } = config;
+  if (!visible) return null;
 
-  // Cubic Bezier Path String
-  const pathD = `M ${startX} ${startY} C ${ctrl1X} ${ctrl1Y}, ${ctrl2X} ${ctrl2Y}, ${endX} ${endY}`;
-  const gradientId = `curved-path-grad-${id}`;
+  const midX = (startX + endX) / 2;
+  const midY = (startY + endY) / 2;
+  // Subtle organic arc perpendicular to the chord toward center
+  const dx = endX - startX;
+  const dy = endY - startY;
+  const ctrlX = midX - dy * 0.14;
+  const ctrlY = midY + dx * 0.14;
+  const pathD = `M ${startX.toFixed(1)} ${startY.toFixed(1)} Q ${ctrlX.toFixed(1)} ${ctrlY.toFixed(1)} ${endX.toFixed(1)} ${endY.toFixed(1)}`;
+  const gradientId = `beam-grad-${id}`;
 
   return (
-    <g className="transition-all duration-500">
+    <g>
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={colorHex} stopOpacity={isHovered ? 0.95 : 0.45} />
-          <stop offset="60%" stopColor={colorHex} stopOpacity={isHovered ? 0.6 : 0.25} />
-          <stop offset="100%" stopColor="#357AC8" stopOpacity={isHovered ? 0.4 : 0.1} />
+          <stop offset="0%" stopColor={colorHex} stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#0066FF" stopOpacity="0.25" />
         </linearGradient>
       </defs>
 
-      {/* Subtle Glow Blur Trail on Hover */}
-      {isHovered && (
-        <path
-          d={pathD}
-          fill="none"
-          stroke={colorHex}
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          className="opacity-30 blur-[2px] transition-all duration-300"
-        />
-      )}
-
-      {/* Primary Flowing Bezier Curve Path with Dotted Pattern */}
+      <path
+        d={pathD}
+        fill="none"
+        stroke={colorHex}
+        strokeWidth="4"
+        strokeLinecap="round"
+        className="opacity-25 blur-[2px]"
+      />
       <path
         d={pathD}
         fill="none"
         stroke={`url(#${gradientId})`}
-        strokeWidth={isHovered ? "2.2" : "1.4"}
-        strokeDasharray="4 6"
+        strokeWidth="1.75"
+        strokeDasharray="4 4"
         strokeLinecap="round"
-        className="transition-all duration-300"
-        style={{
-          opacity: isHovered ? 1 : 0.5,
-        }}
       />
-
-      {/* Light Energy Traveling Pulse Point along the Bezier Curve */}
-      <circle
-        r={isHovered ? "3" : "2"}
-        fill={colorHex}
-        className="transition-all duration-300"
-        opacity={isHovered ? 0.95 : 0.65}
-      >
-        <animateMotion
-          path={pathD}
-          dur={isHovered ? "2s" : "4.5s"}
-          repeatCount="indefinite"
-          calcMode="linear"
-        />
-      </circle>
-
-      {/* Small Organic Junction Point at Node Origin */}
-      <circle
-        cx={startX}
-        cy={startY}
-        r={isHovered ? "3.5" : "2.2"}
-        fill={colorHex}
-        className="transition-all duration-300 opacity-90"
-      />
+      <circle cx={startX} cy={startY} r="3" fill={colorHex} />
     </g>
   );
 };
