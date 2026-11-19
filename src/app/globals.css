@@ -1,0 +1,330 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #ffffff;
+    --bg-subtle: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-elevated: #f1f5f9;
+    --border-subtle: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --text-primary: #0b1220;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent-blue: #0066ff;
+    --accent-green: #00a844;
+    --grid-dot: rgba(15, 23, 42, 0.08);
+    color-scheme: light;
+  }
+
+  .dark {
+    --bg-canvas: #080c14;
+    --bg-subtle: #0e1422;
+    --bg-surface: #131b2e;
+    --bg-elevated: #19233a;
+    --border-subtle: #1e293b;
+    --border-strong: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #7c8da6;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --grid-dot: rgba(148, 163, 184, 0.14);
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color: var(--text-primary);
+    background-color: var(--bg-canvas);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "DM Sans", var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .dark body {
+    letter-spacing: 0.005em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Plus Jakarta Sans", var(--font-geist-sans), system-ui, sans-serif;
+  }
+
+  /* Accessible focus indicators */
+  :focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Architectural engineering dot-grid background */
+  .bg-connection-grid {
+    background-size: 28px 28px;
+    background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+  }
+
+  /* Architectural hairline grid lines */
+  .bg-architectural-lines {
+    background-size: 64px 64px;
+    background-image:
+      linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+  }
+
+  .bg-subtle-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.06) 0%, rgba(0, 200, 83, 0.03) 40%, transparent 70%);
+  }
+
+  .gradient-text-blue-green {
+    color: #0066ff;
+  }
+
+  .dark .gradient-text-blue-green {
+    color: #3b82f6;
+  }
+
+  /* Precision architectural grid mask for hero and obsidian chapters */
+  .mask-radial-fade {
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 35%, transparent 100%);
+  }
+
+  .bg-blueprint-dark {
+    background-size: 56px 56px;
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+  }
+
+  .bg-blueprint-light {
+    background-size: 56px 56px;
+    background-image:
+      linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+  }
+
+  .dark .bg-blueprint-light {
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  }
+}
+
+@keyframes phone-ring {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-2.5px) rotate(-7deg);
+  }
+  45% {
+    transform: translateY(-2.5px) rotate(7deg);
+  }
+  70% {
+    transform: translateY(-2.5px) rotate(-4deg);
+  }
+  88% {
+    transform: translateY(-1px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.animate-phone-ring {
+  animation: phone-ring 1.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-phone-ring,
+  .cpu-pins-top,
+  .cpu-pins-right,
+  .cpu-pins-bottom,
+  .cpu-pins-left,
+  .cpu-core-die,
+  .cpu-signal-dot,
+  .cpu-proc-dot-1,
+  .cpu-proc-dot-2,
+  .cpu-proc-dot-3 {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Phase 1: Connect (Pins move outward 2px and seat) */
+@keyframes cpu-pin-top-anim {
+  0% { transform: translateY(0); }
+  45% { transform: translateY(-2px); }
+  85% { transform: translateY(-1px); }
+  100% { transform: translateY(-1px); }
+}
+@keyframes cpu-pin-right-anim {
+  0% { transform: translateX(0); }
+  45% { transform: translateX(2px); }
+  85% { transform: translateX(1px); }
+  100% { transform: translateX(1px); }
+}
+@keyframes cpu-pin-bottom-anim {
+  0% { transform: translateY(0); }
+  45% { transform: translateY(2px); }
+  85% { transform: translateY(1px); }
+  100% { transform: translateY(1px); }
+}
+@keyframes cpu-pin-left-anim {
+  0% { transform: translateX(0); }
+  45% { transform: translateX(-2px); }
+  85% { transform: translateX(-1px); }
+  100% { transform: translateX(-1px); }
+}
+
+.cpu-pins-top { animation: cpu-pin-top-anim 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.cpu-pins-right { animation: cpu-pin-right-anim 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.cpu-pins-bottom { animation: cpu-pin-bottom-anim 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.cpu-pins-left { animation: cpu-pin-left-anim 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+
+/* Phase 2: Initialize (Inner core die mechanical snap/settle 1px) */
+@keyframes cpu-snap-anim {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(1px); }
+  70% { transform: translateY(-0.5px); }
+  100% { transform: translateY(0); }
+}
+.cpu-core-die {
+  transform-origin: 12px 12px;
+  animation: cpu-snap-anim 220ms cubic-bezier(0.3, 1.4, 0.5, 1) 150ms forwards;
+}
+
+/* Phase 3: Signal Trace (Fast signal path: top pin -> casing -> core -> casing -> right pin) */
+@keyframes cpu-signal-path {
+  0% { opacity: 0; transform: translate(9px, 2px); }
+  15% { opacity: 1; transform: translate(9px, 4px); }
+  40% { opacity: 1; transform: translate(9px, 9px); }
+  70% { opacity: 1; transform: translate(15px, 15px); }
+  90% { opacity: 1; transform: translate(20px, 15px); }
+  100% { opacity: 0; transform: translate(22px, 15px); }
+}
+.cpu-signal-dot {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+  animation: cpu-signal-path 200ms linear 280ms forwards;
+}
+
+/* Phase 4: Process (Sequential processing indicators • → • → •) */
+@keyframes cpu-proc-1 {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  75% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cpu-proc-2 {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  75% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cpu-proc-3 {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  75% { opacity: 0; }
+  100% { opacity: 0; }
+}
+.cpu-proc-dot-1 {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+  animation: cpu-proc-1 180ms ease-in-out 480ms forwards;
+}
+.cpu-proc-dot-2 {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+  animation: cpu-proc-2 180ms ease-in-out 540ms forwards;
+}
+.cpu-proc-dot-3 {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+  animation: cpu-proc-3 180ms ease-in-out 600ms forwards;
+}
+
+/* ============================================================ */
+/* SETSUZOKU HERO ORBITAL MOTION SYSTEM                         */
+/* ============================================================ */
+@keyframes setsuzokuOrbitClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes setsuzokuOrbitCounter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes hubBreathingGlow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-orbit-clockwise-primary {
+  animation: setsuzokuOrbitClockwise 40s linear infinite;
+}
+
+.animate-orbit-counter-primary {
+  animation: setsuzokuOrbitCounter 40s linear infinite;
+}
+
+.animate-orbit-counter-secondary {
+  animation: setsuzokuOrbitCounter 55s linear infinite;
+}
+
+.animate-orbit-clockwise-bg {
+  animation: setsuzokuOrbitClockwise 80s linear infinite;
+}
+
+.animate-hub-breathing {
+  animation: hubBreathingGlow 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-orbit-clockwise-primary,
+  .animate-orbit-counter-primary,
+  .animate-orbit-counter-secondary,
+  .animate-orbit-clockwise-bg,
+  .animate-hub-breathing {
+    animation: none !important;
+  }
+}
